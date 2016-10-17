@@ -60,10 +60,16 @@ def index():
 
     if __name__ == '__main__':
         models.initialize()
-        models.User.create_user(
-        name='Wayne Rooney''
-        email='rooney@united.com'
-        password= 'password',
-        admin=True
-        )
+        try:
+            models.User.create_user(
+            username='Wayne Rooney''
+            email='rooney@united.com'
+            password= 'password',
+            admin=True
+            )
+
+        except ValueError:
+            pass
+
+            
         app.run(debug=DEBUG,host=HOST,port=PORT)
