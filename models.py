@@ -20,6 +20,11 @@ class User(UserMixin, MOdel):
         order_by = ('-joined_at',)
 
 
+    def get_posts(self):
+        return Post.select().where(Post.user ==self)
+        
+
+
     @classmethod
     def create_user(cls,username,email,password,admin=False):
         try:
@@ -31,10 +36,21 @@ class User(UserMixin, MOdel):
         except IntegrityError:
             raise ValueError("user already exists")
 
+class Post(MOdel):
+    timestamp = DateTimeField(default=datetime.datetime.now)
+    user = ForeignKeyField(
+    rel_model=User,
+    related_name='post'
+    )
+    content = TextField()
+
+    class Meta:
+        database=DATABASE
+        order_by= ('-timestamp',)
+
 
 
 def initialize():
     DATABASE.Connect()
     DATABASE.create_tables([User], safe=True)
     DATABASE.close()
-    
