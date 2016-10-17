@@ -1,5 +1,6 @@
 from flask import Flask, g, render_template, flash, redirect, url_for
-from flask.ext.login import LoginManager
+from flask.ext.bcrypt import check_password_hash
+from flask.ext.login import LoginManager,login_user, logout_user,login_required
 
 import forms
 import models
@@ -51,6 +52,25 @@ def register():
         return redirect(url_for('index'))
     return render_template('regiser.html',form=form)
 
+@app.route('/login', methods=('GET, POST'))
+def login():
+    form= forms.LoginForm()
+    if form.validate_on_submit():
+        try:
+            users = models.User.get(models.User.email== form.email.data)
+        except models.DoesNotExist:
+            flash("Your email or password doesnt match!","error")
+        else:
+            if check_password_hash(user.password,form.password.data):
+                login_user(user)
+                flash("You've been looged in !", "success")
+                return redirect(url_for ('index'))
+            else:
+                flash("Your email or password doesnt match!","error")
+
+            return render_template('login.html',form=form)
+
+
 
 @app.route('/')
 def index():
@@ -71,5 +91,5 @@ def index():
         except ValueError:
             pass
 
-            
+
         app.run(debug=DEBUG,host=HOST,port=PORT)
