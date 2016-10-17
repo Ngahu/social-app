@@ -72,6 +72,11 @@ def login():
 
 
 
+@app.route('/logout')
+@login_required
+
+
+
 @app.route('/')
 def index():
     return "hello"
