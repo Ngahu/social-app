@@ -30,3 +30,11 @@ class User(UserMixin, MOdel):
                 is_admin=admin)
         except IntegrityError:
             raise ValueError("user already exists")
+
+
+
+def initialize():
+    DATABASE.Connect()
+    DATABASE.create_tables([User], safe=True)
+    DATABASE.close()
+    
