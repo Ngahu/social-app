@@ -164,8 +164,9 @@ def view_post(post_id):
         abort(404)
     return render_template('stream.html',stream= posts)
 
-
-
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 
     if __name__ == '__main__':
