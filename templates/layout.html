@@ -6,3 +6,25 @@
   <title> {% block tittle  %} TwoCans {% endblock %} </title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial=scare =1">
+  <link rel="stylesheet" href="static/css/main.css">
+
+</head>
+<body>
+  <header>
+    <div class="row">
+      <div class="grid-33">
+        <h1>hello  {% if current_user. is authenticated() %} {{ current_user.username }} {%  end if %}!</h1>
+
+</div>
+
+<div class="grid-33">
+{% if current_user.is authenticated() %}
+<a href="{{url_for ('logout') }}" class="icon-power" title="Log out"></a>
+{% else %}
+<a href="{{url_for ('login') }}" class="icon-power" title="log in"></a>
+<a href="{{url_for ('register') }}" class="icon-profile" title="Register"></a>
+{% endif %}
+
+</div>
+</div>
+</header>
