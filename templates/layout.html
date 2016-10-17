@@ -37,3 +37,11 @@
     {%end for %}
   {%endif %}
 {%end with %}
+
+<div class="row">
+  <div class="main">
+    <nav>
+      <a href="{{url_for ('index') }}">All</a>
+      {% if current_user.is authenticated() %}
+      <a href="{{url_for ('post') }}" class="new">create New Post </a>
+      {%endif %}
