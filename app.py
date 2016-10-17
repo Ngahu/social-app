@@ -131,7 +131,26 @@ def follow(username):
             pass
         else:
             flash("you are now following {}!".format(to_user.username), "success")
-    return redirect(url_for('stream',username=to_user.username))            
+    return redirect(url_for('stream',username=to_user.username))
+
+@app.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    try:
+        to_user = models.User.get(models.User.username**username)
+    except models.DoesNotExist:
+        pass
+    else:
+        try:
+            models.Relationship.get(
+                from_user= g.user._get_current_object(),
+                to_user=to_user
+            ).delete_instance()
+        except models.IntegrityError:
+            pass
+        else:
+            flash("you've  now unfollowed {}!".format(to_user.username), "success")
+    return redirect(url_for('stream',username=to_user.username))
 
 
     if __name__ == '__main__':
