@@ -43,5 +43,6 @@
     <nav>
       <a href="{{url_for ('index') }}">All</a>
       {% if current_user.is authenticated() %}
+      <a href="{{ url_for('stream', username=current_user.username) }}">FOllowing </a>
       <a href="{{url_for ('post') }}" class="new">create New Post </a>
       {%endif %}

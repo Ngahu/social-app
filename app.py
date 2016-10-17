@@ -120,11 +120,11 @@ def stream(username=None):
         models.initialize()
         try:
             models.User.create_user(
-            username='Wayne Rooney''
-            email='rooney@united.com'
-            password= 'password',
-            admin=True
-            )
+                username='Wayne Rooney''
+                email='rooney@united.com'
+                password= 'password',
+                admin=True
+                )
 
         except ValueError:
             pass
