@@ -28,6 +28,8 @@
   {% if user != current_user %}
       {% if not user in current_user.following() %}
       <a href="{{url_for('follow',username=user.username) }}" class="small">follow</a>
+      {% else %}
+      <a href="{{url_for('unfollow',username=user.username) }}" class="small">Unfollow</a>
       {% endif %}
   {% endif %}
 {% endif %}
