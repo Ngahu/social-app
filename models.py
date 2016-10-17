@@ -54,6 +54,9 @@ class Post(MOdel):
         order_by= ('-timestamp',)
 
 
+class Relationship(MOdel):
+    from_user = ForeignKeyField(USer, related_name = 'relationships')
+
 
 def initialize():
     DATABASE.Connect()
