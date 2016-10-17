@@ -22,7 +22,11 @@ class User(UserMixin, MOdel):
 
     def get_posts(self):
         return Post.select().where(Post.user ==self)
-        
+
+    def get_stream(self):
+        return Post.select().where(
+        (Post.user == self)
+        )
 
 
     @classmethod

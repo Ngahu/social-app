@@ -1,6 +1,6 @@
 from flask import Flask, g, render_template, flash, redirect, url_for
 from flask.ext.bcrypt import check_password_hash
-from flask.ext.login import LoginManager,login_user, logout_user,login_required
+from flask.ext.login import LoginManager,login_user, logout_user,login_required, current_user
 
 import forms
 import models
@@ -32,6 +32,7 @@ def before_request():
     """Connect to the database before each request"""
     g.db = models.DATABASE
     g.db.Connect()
+    g.user = current_user
 
 @app.after_request
 def after_request(response):
@@ -78,6 +79,17 @@ def logout():
     logout_user()
     flash("YOu've been loged out!!", "success")
     return redirect(url_for('index'))
+
+@app.route('/new_post', methods=('GET', 'POST'))
+@login_required
+def post():
+    form = forms.PostForm()
+    if form.validate_on_submit():
+        models.Post.create(user=g.user._get_current_object(),
+                          content= Form.content.data.strip())
+        flash("Message posted! Thanks!", "success")
+        return redirect(url_for('index'))
+    return render_template('post.html',form=form)
 
 
 
