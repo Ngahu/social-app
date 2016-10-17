@@ -95,7 +95,9 @@ def post():
 
 @app.route('/')
 def index():
-    return "hello"
+    stream = models.Post.select().limit(100)
+    return render_template('stream.html',stream=stream)
+
 
 
 
