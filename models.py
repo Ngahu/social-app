@@ -37,6 +37,15 @@ def following(self):
             Relationship.from_user == self
         )
     )
+def followers(self):
+    """Get the users that are following me """
+    return(
+        User.select().join(
+            Relationship, on=Relationship.from_user
+        ).where(
+            Relationship.to_user == self
+        )
+    )
 
     @classmethod
     def create_user(cls,username,email,password,admin=False):
